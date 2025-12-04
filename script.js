@@ -14,6 +14,7 @@ let firstCard = null, secondCard = null;
 // You will need to lock the board to stop users from choosing cards when they choose two wrong cards
 // (Don't have to worry about this too much)
 let lockBoard = false;
+let counter = 0;
 
 /* 
     You must initialize the game board. You have been given a shuffleArray() function.
@@ -23,8 +24,26 @@ let lockBoard = false;
 */
 function initGame() {
     // Write your code here
+    counter = 0;
+    cards = symbols.concat(symbols); //makes cards a new array with symbols concatated with the second symbol
+    shuffleArray(cards);
+
+    const gameBoard = document.getElementById('game-board');
+    document.getElementById('score').innerText = "Score: " + counter;
+    gameBoard.innerHTML = ''; //clears the board
+    
+
+    for(let i = 0; i < cards.length; i++){ //creates new cards but doesn't show the symbols get because we are doing that in flipcard()
+        const symbol = cards[i];
+        const cardElement = createCard(symbol);
+        gameBoard.appendChild(cardElement);
+    }
+
+    resetBoard();
 
     document.getElementById('restart-btn').addEventListener('click', initGame);
+
+
 }
 
 /*
@@ -32,8 +51,15 @@ function initGame() {
     within the element itself, since we'll need it for later and there's no easy way to get it from the arrays.
     Also make sure to add the event listener with the 'flipCard' function
 */
-function createCard(symbol) {
+function createCard(symbol) { //this method doesn't actually draw the card it only creates the div for it, metadata I think
     // Write your code here
+    const card = document.createElement('div'); //creates an empty <div></div>
+    card.classList.add('card'); //adds a class to the card. <div class="card"></div>
+    card.dataset.symbol = symbol //adds the dataset property to the elemnt. essentially <div class="card" data-symbol = 'banana'></div> 
+    //card.textContent = card.dataset.symbol; //this would display the symbols but we will do the next line because we want to flip them
+    card.addEventListener('click', () => flipCard(card)); //calling flip card method when clicked
+
+    return card;
 }
 
 /*
@@ -46,8 +72,26 @@ function createCard(symbol) {
 */
 function flipCard(card) {
     // If the board is supposed to be locked or you picked the same card you already picked
-    if (lockBoard || card === firstCard) return;
+    if (lockBoard || card === firstCard) {
+        return;
+    }
     // Write your code here
+    if(firstCard == null){ //flipping the first card
+        card.classList.add('flipped');
+        card.textContent = card.dataset.symbol;
+        firstCard = card;
+
+    }
+
+    else{ //first card is already flipped and now we have fliped the second card
+
+        card.classList.add('flipped');
+        card.textContent = card.dataset.symbol;
+        secondCard = card;
+
+        checkForMatch();
+
+    }
 }
 
 /* 
@@ -57,6 +101,19 @@ function flipCard(card) {
 */
 function checkForMatch() {
     // Write your code here
+    
+    if(firstCard.dataset.symbol == secondCard.dataset.symbol){
+        counter = counter + 5;
+        document.getElementById('score').innerText = "Score: " + counter;
+        disableCards();
+
+    }
+    else{
+        counter = counter - 1;
+        document.getElementById('score').innerText = "Score: " + counter;
+        unflipCards();
+        
+    }
 }
 
 /* 
@@ -66,6 +123,9 @@ function checkForMatch() {
 */
 function disableCards() {
     // Write your code here
+    firstCard.classList.add('matched');
+    secondCard.classList.add('matched');
+    resetBoard();
 }
  
 /* ---------------------  Everything under has already been done for you -------------------------- */
