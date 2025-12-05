@@ -17,6 +17,7 @@ let lockBoard = false;
 let counter = 0;
 let start = true;
 
+
 /* 
     You must initialize the game board. You have been given a shuffleArray() function.
     This function should also reset the entire game board by making sure there's no HTML inside of the game-board div.
@@ -25,6 +26,10 @@ let start = true;
 */
 function initGame() {
     // Write your code here
+
+  
+
+
     counter = 0;
     cards = symbols.concat(symbols); //makes cards a new array with symbols concatated with the second symbol
     shuffleArray(cards);
@@ -35,7 +40,9 @@ function initGame() {
     document.getElementById('score').innerText = "Score: " + counter;
     gameBoard.innerHTML = ''; //clears the board
     
-
+  setTimeout(() => { //creates a 3 second delay before the game even starts
+      
+      
     for(let i = 0; i < cards.length; i++){ //creates new cards but doesn't show the symbols get because we are doing that in flipcard()
         const symbol = cards[i];
         const cardElement = createCard(symbol);
@@ -44,10 +51,12 @@ function initGame() {
     
         
     }
+    
 
        
 
     resetBoard();
+      }, 3000);
 
     document.getElementById('restart-btn').addEventListener('click', initGame);
 
