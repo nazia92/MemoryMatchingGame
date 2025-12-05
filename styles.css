@@ -3,15 +3,22 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #99ccee;
-    color: white;
+    background-color: #99ccee; 
+    color: white; 
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, sans-serif;
     margin: 0;
     background-image: linear-gradient(to top,rgb(237, 237, 237),  #99ccee); /*blue and white gradient */
+    
+    
 }
+
+ 
 
 .game-container {
     text-align: center;
+   
+ 
+
 }
 
 .game-board {
@@ -19,7 +26,18 @@ body {
     grid-template-columns: repeat(4, 100px);
     grid-gap: 10px;
     margin: 20px auto;
+    justify-content: center;
+    align-items: center;
+
+   
 }
+
+.card.starting {
+    background-color: #fff;
+    color: #333;
+}
+
+
 
 .card {
     width: 100px;
@@ -34,12 +52,18 @@ body {
     cursor: pointer;
     transition: transform 0.5s;
     transform-style: preserve-3d;
+   
 }
 
 .card.flipped {
     background-color: #fff;
     color: #333;
 }
+
+
+
+
+
 
 .card.matched {
     background-color: #2e97cb; /* blue now */
@@ -57,3 +81,9 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, sans-serif;
     border-color:#4809f7;
 }
+
+#score{
+    color:black;
+}
+
+

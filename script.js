@@ -15,6 +15,7 @@ let firstCard = null, secondCard = null;
 // (Don't have to worry about this too much)
 let lockBoard = false;
 let counter = 0;
+let start = true;
 
 /* 
     You must initialize the game board. You have been given a shuffleArray() function.
@@ -28,6 +29,8 @@ function initGame() {
     cards = symbols.concat(symbols); //makes cards a new array with symbols concatated with the second symbol
     shuffleArray(cards);
 
+
+
     const gameBoard = document.getElementById('game-board');
     document.getElementById('score').innerText = "Score: " + counter;
     gameBoard.innerHTML = ''; //clears the board
@@ -37,7 +40,12 @@ function initGame() {
         const symbol = cards[i];
         const cardElement = createCard(symbol);
         gameBoard.appendChild(cardElement);
+        firstUnflipCards(cardElement);
+    
+        
     }
+
+       
 
     resetBoard();
 
@@ -56,7 +64,11 @@ function createCard(symbol) { //this method doesn't actually draw the card it on
     const card = document.createElement('div'); //creates an empty <div></div>
     card.classList.add('card'); //adds a class to the card. <div class="card"></div>
     card.dataset.symbol = symbol //adds the dataset property to the elemnt. essentially <div class="card" data-symbol = 'banana'></div> 
-    //card.textContent = card.dataset.symbol; //this would display the symbols but we will do the next line because we want to flip them
+
+    card.textContent = card.dataset.symbol; //this would display the symbols but we will do the next line because we want to flip them
+    card.classList.add('starting');
+
+
     card.addEventListener('click', () => flipCard(card)); //calling flip card method when clicked
 
     return card;
@@ -132,7 +144,6 @@ function disableCards() {
 
 function unflipCards() {
 
-    // We lock the board so that the user can't touch the board while it is unflipping
     lockBoard = true;
 
     // The cards will be flipped back after 1 second and the board will be reset
@@ -144,6 +155,21 @@ function unflipCards() {
         secondCard.textContent = '';
         resetBoard();
     }, 1000);
+}
+
+function firstUnflipCards(card) {
+
+    // We lock the board so that the user can't touch the board while it is unflipping
+    lockBoard = true;
+
+    // The cards will be flipped back after 1 second and the board will be reset
+    // The 1 second is to give the user time to actaully see the card so they can memorize them before they unflip
+    setTimeout(() => {
+        card.textContent = '';
+        card.classList.remove('starting');
+        resetBoard();
+    }, 1000);
+
 }
 
 function resetBoard() {
