@@ -177,7 +177,7 @@ function firstUnflipCards(card) {
         card.textContent = '';
         card.classList.remove('starting');
         resetBoard();
-    }, 1000);
+    }, 2000);
 
 }
 
